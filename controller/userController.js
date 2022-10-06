@@ -47,9 +47,14 @@ userConstroller.user= async (req, res) => {
 
 userConstroller.readAllUser= async(req,res)=>{
     try{
-        console.log(req.headers.authorization);
-        const readAll= await User.query();
-        return res.response(readAll).code(200);
+        if(req.auth.artifacts.role=='user'){
+            return res.response({message:"Denied access"}).code(500);
+        }
+        else{
+            const readAll= await User.query();
+            return res.response(readAll).code(200);
+        }
+
     }
     catch(error){
          return res.response(error).code(500);
@@ -70,7 +75,7 @@ userConstroller.readUser= async(req,res)=>{
 
 userConstroller.updateUser= async(req,res)=>{
     try{
-        const update = await User.query().patchAndFetchById(req.query.id, { username: req.payload.username});
+        const update = await User.query().patchAndFetchById(req.query.id, req.payload);
         return res.response(update).code(200);;
     }
     catch(error){

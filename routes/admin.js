@@ -9,7 +9,7 @@ const admin =[
             validate:{
                 payload:Joi.object({
                     screen_name:Joi.string().required(),
-                    seats:Joi.integer().required(),
+                    seats:Joi.number().integer().required(),
                 }),
                 failAction: (req, res, source, error) => {                                                
                     console.log("Error: ", source.details[0].message);
@@ -26,7 +26,7 @@ const admin =[
             validate:{
                 payload:Joi.object({
                     movie_name:Joi.string().required(),
-                    duration:Joi.integer().required(),
+                    duration:Joi.number().integer().required(),
                     role:Joi.string().optional()
                 }),
                 failAction: (req, res, source, error) => {                                                

@@ -5,26 +5,33 @@ let route = require("./routes");
 let dotenv = require("dotenv");
 dotenv.config();
 
-const User = require('./model/User');
-const Ticket = require('./model/Ticket')
 const knex= require('./config/db');
 const authenticate= require('./middleware/authenticate')
-
+const AuthBearer = require('hapi-auth-bearer-token');
 
 
 const init = async () => {
     try{
+        //server creation
         const server = Hapi.Server({
             host: process.env.APP_HOST,
             port: process.env.APP_PORT
         });
         
-        
-        await server.register(require('hapi-auth-jwt2'))
-        server.auth.strategy('jwt', 'jwt', {
-            validate: authenticate
-        });
+        //authentication
+        await server.register(AuthBearer)
+        server.auth.strategy(
+            'jwt', 
+            'bearer-access-token',
+            { 
+                validate:authenticate
+            }
+        );
+
+        //route
         server.route(route);
+
+        //server start
         await server.start();
         console.log("Server started on ",server.info.uri);
     }

@@ -2,14 +2,15 @@ const jwt=require('jsonwebtoken')
 
 const validate=(req,res)=>{
     try{
-        console.log("valid");
-        const token=req.headers.authorization.split(' ')[1]
-        const decode=jwt.verify(token,'verySecretpass')
-        return {isValid:true, decode}
+            let token=req.headers.authorization.split(' ')[1];
+            const isValid = token?true:false;
+            const credentials =  {token} ;
+            const artifacts=jwt.verify(token,'verySecretpass');
+            return { isValid, credentials, artifacts };
     }
     catch(error)
     {
-         res.response(error).code(500);
+         return error;
         
     }
 }
