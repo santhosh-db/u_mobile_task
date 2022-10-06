@@ -5,8 +5,8 @@ class User extends Model{
         return 'users';
     };
     static get idColumn() {
-    return 'id';
-  }
+        return 'id';
+    }
 
     $beforeInsert(){
         this.createdAt=new Date();

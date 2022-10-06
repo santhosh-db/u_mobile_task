@@ -45,7 +45,7 @@ const user =[
     {
         method: 'GET',
         path: '/readAllUser',
-        config: { auth: 'jwt' },
+        options: { auth: 'jwt' },
         handler: userConstroller.readAllUser
     },
     {

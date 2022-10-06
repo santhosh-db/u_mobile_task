@@ -1,6 +1,6 @@
 const { Model } = require('objection');
 
-class Theatre extends Model {
+class Movie extends Model {
   static get tableName() {
     return 'movies';
   };
@@ -15,21 +15,31 @@ class Theatre extends Model {
     this.updatedAt = new Date();
   };
 
-  static get screennameColumn() {
-    return 'movie_name';
+  static get titleColumn() {
+    return 'title';
   };
 
-  static get seatsColumn() {
-    return 'seats';
+  static get languageColumn() {
+    return 'language';
   };
+
+  static get typeColumn(){
+    return 'type';
+  }
+
+  static get durationColumn(){
+    return 'duration';
+  }
 
   static get jsonSchema() {
     return {
       type: 'object',
-      required: ['movie_name', 'duration'],
+      required: ['title', 'language','type','duration'],
       properties: {
         id: { type: 'integer' },
-        movie_name: { type: 'string', minLength: 1, maxLength: 255 },
+        title: { type: 'string', minLength: 1, maxLength: 255 },
+        language: {type:'string'},
+        type:{type:'string'},
         duration: { type: 'integer' },
         createdAt: { type: 'string' },
         updatedAt: { type: 'string' }
@@ -38,4 +48,4 @@ class Theatre extends Model {
   };
 };
 
-module.exports = Theatre;
+module.exports = Movie;

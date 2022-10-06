@@ -7,7 +7,7 @@ class userConstroller{}
 userConstroller.list= async(req, res) => {
     try{
       let del=await User.query().delete();
-      return res.response(del).code(200);
+      return res.response({message: 'User Deleted!',data:del}).code(200);
     }
     catch(error){
        return res.response(error).code(500);
@@ -48,11 +48,11 @@ userConstroller.user= async (req, res) => {
 userConstroller.readAllUser= async(req,res)=>{
     try{
         if(req.auth.artifacts.role=='user'){
-            return res.response({message:"Denied access"}).code(500);
+            return res.response({message:"Denied access"}).code(200);
         }
         else{
             const readAll= await User.query();
-            return res.response(readAll).code(200);
+            return res.response({message: 'User List!',data:readAll}).code(200);
         }
 
     }
@@ -65,7 +65,7 @@ userConstroller.readAllUser= async(req,res)=>{
 userConstroller.readUser= async(req,res)=>{
     try{
         const readbyId = await User.query().findById(req.query.id);
-        return res.response(readbyId).code(200);
+        return res.response({message: `User ${req.query.id}!`,data:readbyId}).code(200);
     }
     catch(error){
         return res.response(error).code(500);
@@ -76,7 +76,7 @@ userConstroller.readUser= async(req,res)=>{
 userConstroller.updateUser= async(req,res)=>{
     try{
         const update = await User.query().patchAndFetchById(req.query.id, req.payload);
-        return res.response(update).code(200);;
+        return res.response({message: 'User updated!',data:update}).code(200);;
     }
     catch(error){
          return res.response(error).code(500);

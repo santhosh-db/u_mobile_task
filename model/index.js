@@ -4,5 +4,5 @@ module.exports={
     user:  require('./User'),
     theatre:require('./Theatre'),
     ticket: require('./Ticket'),
-    //order: require('./order')
+    schedule: require('./schedule')
 }
